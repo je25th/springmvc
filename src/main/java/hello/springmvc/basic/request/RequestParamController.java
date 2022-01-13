@@ -1,7 +1,9 @@
 package hello.springmvc.basic.request;
 
+import hello.springmvc.basic.HelloData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,7 +29,7 @@ public class RequestParamController {
     @ResponseBody //@RestController와 같은 효과
     @RequestMapping("/request-param-v2")
     public String requestParamV2(@RequestParam("username") String memberName,
-                               @RequestParam("age") int memberAge) {
+                                 @RequestParam("age") int memberAge) {
 
         log.info("username={}, age={}", memberName, memberAge);
         return "ok";
@@ -60,7 +62,7 @@ public class RequestParamController {
     @ResponseBody
     @RequestMapping("/request-param-default")
     public String requestParamDefault(@RequestParam(defaultValue = "guest") String username,
-                                       @RequestParam(defaultValue = "-1") int age) {//defaultValue를 쓰면 required=false할 필요가 없음, 빈문자도 defalut로 처리해줌
+                                      @RequestParam(defaultValue = "-1") int age) {//defaultValue를 쓰면 required=false할 필요가 없음, 빈문자도 defalut로 처리해줌
         log.info("username={}, age={}", username, age);
         return "ok";
     }
@@ -71,4 +73,23 @@ public class RequestParamController {
         log.info("username={}, age={}", paramMap.get("username"), paramMap.get("age"));
         return "ok";
     }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v1")
+    public String modelAttributeV1(@ModelAttribute HelloData helloData) {
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+        log.info("hellodata={}", helloData);
+
+        return "ok";
+    }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v2")
+    public String modelAttributeV2(HelloData helloData) {
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
+        log.info("hellodata={}", helloData);
+
+        return "ok";
+    }
+
 }
